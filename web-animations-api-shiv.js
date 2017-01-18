@@ -15,9 +15,10 @@
 
     var _element = this;
 
-    // We want the animation to have a unique name,
-    // to avoid conflicts with any existing CSS animations
-    var _animation_name = createAnimationName(win.Date.now(), _element);
+    // If you don't pass in an id in the options object,
+    // we still want the animation to have a unique name,
+    // to avoid conflicts with any existing CSS animations.
+    var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
     // Append the _animation_name to the style element itself as a data-attribute
     // this could be used to forcibly remove the animation if desired...
