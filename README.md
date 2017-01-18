@@ -1,8 +1,10 @@
 # web-animations-api-shiv
-Bringing WAAPI to older (though not ancient) browsers, with a little trickery
+Bringing partial-WAAPI to older (though not ancient) browsers, with a little trickery
 
 ## What is this?
 This is an unofficial Web Animations API shiv, as opposed to the canonical Web Animations polyfill, which you can find here: https://github.com/web-animations/web-animations-js
+
+The official polyfill does a lot more to bring the full WAAPI to older browsers, and this shiv will be insufficient for many people. It doesn't bring animation events or anything cool like that to older browsers; this shiv is simply about enabling developers like myself to use the Web Animations API to dynamically create animations in browsers other than the 50th versions of Chrome/Firefox.
 
 ## Why do we need an unofficial 'shiv'?
 Web Animations JS is massive. It's enormous. GSAP is more compact and better in terms of performance. Yet the Web Animations API has landed in the most recent Chrome and Firefox browsers, and it would be nice to use modern DOM APIs without worrying about the enormity and reputed slowness of the polyfill.
