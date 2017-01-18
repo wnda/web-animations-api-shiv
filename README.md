@@ -19,18 +19,46 @@ So this library basically just waits for the API call (extending Element.prototy
 ## Can I use it?
 Sure. But here's the rub: this lib currently requires ES5 to work. Sorry IE8.
 
-This lib relies primarily on functional Array methods, i.e. [].map, [].filter, [].indexOf. It also depends on Object.keys and Date.now, all of which are straightforward to polyfill separately -- but I would not bother, since CSS animation is not going to be supported in any browser that *lacks* these basic ES5 features.
+This lib relies primarily on functional Array methods, i.e. `[].map`, `[].filter`, `[].indexOf`. It also depends on `Object.keys` and `Date.now`, all of which are straightforward to polyfill separately and are available in IE9.
 
-## Example call
-You will be able to use this lib as though it was the WAAPI itself. Your WAAPI call might look like this:
+I would not bother polyfilling those, however, since CSS animation is not going to be supported in any browser that *lacks* these basic ES5 features. 
+
+And CSS animation is **absolutely crucial** to this lib, so IE9 is out as well. If you need to animate the DOM in IE8, or worse, please just use GSAP. It supports IE6 for goodness' sake. 
+
+
+## Example
+Include the script before your app code, like so:
+    
+    <script src="/path/to/web-animations-api-shiv.js"></script>
+    <script>
+      // do your stuff
+    </script>
+
+This lib has been designed to attach an equivalent API to `Element.prototype`, so you will be able to use this as though it was the Web Animations API itself, so your WAAPI call might look like this:
 
     document.querySelector('header').animate([
       { opacity: 1 },
       { opacity: 0.1, offset: 0.7 },
       { opacity: 0 }
     ], 2000);
+    
+or
+
+    document.querySelector('header').animate([
+      { opacity: 1 },
+      { opacity: 0.1, offset: 0.7 },
+      { opacity: 0 }
+    ], {
+      duration: '2s',
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      fill: 'forwards',
+    });
 
 and the polyfill will handle the same syntax in a browser without WAAPI.
+
+Obviously the `animation-name` is configured automatically, but if you want to name it yourself, passing in an `id` in the `options` object (second parameter) will enable you to name the keyframe animation. 
+
+I gave some thought to exposing the ability to pass in callback functions, executed using `setTimeout` in conjunction with the `animation-duration` and `animation-delay`. However, I believe this would be hilariously unreliable, and I would be reluctant to include something off-spec (it's bad enough already -- good luck testing this thing!), and since CSS transitions/animations emit DOM events, I recommend you use those.
 
 ## But there's GSAP, Velocity... why do I need this?
 WAAPI offers significant gains, and this shiv is intended for those who want to use WAAPI today rather than waiting five years for IE11 to die or simply casting aside non-trivial numbers of users. If you need extreme control, great performance, and timelining, you'd have picked GSAP before WAAPI anyway. This lib is for people who don't need extreme control, want great performance and also don't want to use a heavy lib.
