@@ -7,7 +7,14 @@ This is an unofficial Web Animations API shiv, as opposed to the canonical [Web 
 Of course, the official polyfill does *a lot* more to bring the full WAAPI to older browsers, and I do not have any illusions about my little hack here: this lib will be insufficient for *many* people. It doesn't bring animation events or anything cool like that to older browsers; this shiv is simply about enabling developers like myself to use the Web Animations API to dynamically create optimised animations in browsers other than the latest versions of Chrome/Firefox.
 
 ## Why do we need an unofficial 'shiv'?
-[web-animations-js](https://github.com/web-animations/web-animations-js) is *massive*. GSAP is not exactly slimline tonic either, but to this day, it's hard to beat in terms of performance. The Web Animations API has landed in the most recent Chrome and Firefox browsers, and I thought it would be nice to use modern DOM APIs without worrying about the enormity and reputed slowness of the polyfill or about additional APIs/libraries in general. You might say that my writing this code was a 'you might not need GSAP/Velocity' moment. Navigating to that repository, you can't exactly just *grab and go*. I wanted to offer an alternative to change all of that. Something which would be simple and elegant (if terse/untestable/nausea-inspiring-to-many-developers) by comparison.
+GSAP is, to this day, hard to beat in terms of performance. Maybe in Chrome Web Animations/CSS Animations might have the upper hand, but not by much. GSAP works well everywhere. So, 'need' is already the wrong question. Next to GSAP, not only this shiv, but also the Web Animations API itself can appear to be without purpose. 
+
+The right question is perhaps 'what is the purpose of this shiv?' Well, maybe you don't like GSAP. Maybe you don't want to add a third-party library, but you're happy to polyfill something native to modern browsers. Or maybe you just like the syntax and have simple requirements.
+
+The Web Animations API has landed in the most recent Chrome and Firefox browsers, but the polyfill,
+[web-animations-js](https://github.com/web-animations/web-animations-js) is *massive*. I thought it would be nice to use modern DOM APIs without worrying about the enormity (and reputed slowness) of the polyfill. I also wondered if it could be done using the approach I have used, so you might call this shiv a proof-of-concept. 
+
+You might say that my writing this code was a 'you might not need GSAP/Velocity' moment.
 
 ## How does it work then?
 The key to the official Web Animations API is that it's basically a means to programmatically create that which was previously confined to the more or less static realm of CSS. CSS gets a lot of stick. I've always found it to be extremely useful and even powerful, but for most developers it's just an untestable and therefore unstable/unfriendly aspect to front-end development.
