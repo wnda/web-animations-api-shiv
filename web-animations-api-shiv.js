@@ -2,7 +2,12 @@
   WEB ANIMATIONS API SHIV :: https://github.com/wnda/web-animations-api-shiv/
 */
 
+// Wrap everything in a nice, neat IIFE.
+// This returns undefined, because we're directly extending Element.prototype with a reference 
+// to the anonymous function we need. You if you need to save a few bits, 
+// you can use !function, +function or void function, etc.
 ;(function (win, doc) {
+  // use strict because why wouldn't you?
   'use strict';
 
   // Double-check WAAPI is not available
@@ -18,6 +23,7 @@
     // If you don't pass in an id in the options object,
     // we still want the animation to have a unique name,
     // to avoid conflicts with any existing CSS animations.
+    // Also we 'cache' this because we'll be referring to it more than once.
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
     // Append the _animation_name to the style element itself as a data-attribute
