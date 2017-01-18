@@ -1,5 +1,5 @@
 # web-animations-api-shiv
-### Bringing WAAPI to older browsers with a little trickery
+Bringing WAAPI to older (though not ancient) browsers, with a little trickery
 
 ## What is this?
 This is an unofficial Web Animations API shiv, as opposed to the canonical Web Animations polyfill, which you can find here: https://github.com/web-animations/web-animations-js
@@ -15,15 +15,22 @@ WAAPI is also silky smooth in the browsers that support it, but that big ass pol
 So this library basically just waits for the API call (extending Element.prototype if 'animate' is not found in said prototype chain) and uses the parameters to dynamically write a set of keyframes which would match the WAAPI animation in modern browsers.
 
 ## Can I use it?
-Sure.
-
-But it's nowhere near production-ready and currently requires ES5 to work.
+Sure. But here's the rub: this lib currently requires ES5 to work. Sorry IE8.
 
 ## Example call
-You will be able to use this lib as though it was the WAAPI itself, so:
+You will be able to use this lib as though it was the WAAPI itself. Your WAAPI call might look like this:
 
     document.querySelector('header').animate([
       { opacity: 1 },
       { opacity: 0.1, offset: 0.7 },
       { opacity: 0 }
     ], 2000);
+
+and the polyfill will handle the same syntax in a browser without WAAPI.
+
+## But there's GSAP, Velocity... why do I need this?
+[Brian Birtles said it best](https://css-tricks.com/comparison-animation-technologies/#comment-1601471):
+
+> The performance advantage of CSS Animations/Transitions is that these animations that can be composited on the GPU, can also be delegated to a separate thread or process. This allows them to continue running smoothly even when the main thread is busy. That’s something that scripted animation simply cannot do unless they use CSS Animations/Transitions or the Web Animations API under the hood. (And it’s a very significant optimization on low-end mobile devices!)
+
+> As for the performance of the Web Animations API, it is identical to CSS Animations/Transitions. It is exactly the same code running both. The whole purpose of Web Animations API is to be a lower-level API on top of which CSS Animations/Transitions run. (And SMIL too, for that matter.)
