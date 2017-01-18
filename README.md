@@ -69,11 +69,19 @@ Obviously the `animation-name` is configured automatically, but if you want to n
 I gave some thought to exposing the ability to pass in callback functions, executed using `setTimeout` in conjunction with the `animation-duration` and `animation-delay`. However, I believe this would be hilariously unreliable, and I would be reluctant to include something off-spec (it's bad enough already -- good luck testing this thing!), and since CSS transitions/animations emit DOM events, I recommend you use those.
 
 ## So wait, there's GSAP, Velocity, jQuery... and they're all better... so why do I need this?
-They're more powerful in terms of scheduling animations, chaining them up and making them tell a story without much effort. But jQuery is slow as a word I won't use here, Velocity and GSAP both use a different API to the officla WAAPI standard, and I think going forward if you want to minimise the number of external libraries you're using (obviously this is an external library, but it's quite small) and you don't have complex timelining requirements, this might be useful to you.
+They're more powerful in terms of scheduling animations, chaining them up and making them tell a story without much effort. But jQuery is slow as... a word I won't use here. 
+
+Velocity and GSAP both use a different API to the offical WAAPI standard, so if you don't want to get bogged down with them, or if you want to minimise the size of external libraries you're using or the number of third-party programs you're using, or if you don't have complex timelining requirements, this might be useful to you.
 
 If your eyebrow is raised, you can probably close the tab now.
 
-Web Animations and CSS Animations offer significant performance gains, and this shiv is intended for those who want to use WAAPI today rather than waiting five years for IE11 to die or simply casting aside a non-trivial number of users.
+If your eyebrows are at rest, I will point out one other significant detail: if you want to learn something awesome, and you want the best performance *in all browsers* (not just Chrome), **use GSAP**. It's faster. Don't believe me? [Read this article by GSAP's creator, Jack Doyle](https://css-tricks.com/myth-busting-css-animations-vs-javascript/). Remember, supporting browsers isn't just about polyfills; you need to consider that the actual rendering in IE10/IE11 is atrocious, and JavaScript will outperform CSS Animation -- this story will be true in many browsers and browser versions.
+
+GSAP is bulletproof.
+
+However
+
+GSAP has some licensing small print that you might want to familiarise yourself with before you commit to it, if you're a business at least. Compared to animation alternatives that aren't GSAP, Web Animations and CSS Animations offer significant performance gains, and this shiv is intended for those who want to use WAAPI today rather than waiting five years for IE11 to die or simply casting aside a non-trivial number of users.
 
 [Brian Birtles said it best](https://css-tricks.com/comparison-animation-technologies/#comment-1601471):
 
