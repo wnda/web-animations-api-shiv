@@ -1,81 +1,138 @@
 /*
-  WEB ANIMATIONS API SHIV
-  https://github.com/wnda/web-animations-api-shiv
+  WEB ANIMATIONS API SHIV :: https://github.com/wnda/web-animations-api-shiv/
 */
 
 ;(function (win, doc) {
   'use strict';
 
-  Element.prototype.animate = function (animations, options) {
-    var _element = this;
-    var _name = 'was-' + win.Date.now();
-    var _keyframes = '@keyframes ' + _name + '{' +
-      animations.map(function (keyframe, idx, keyframes) {
-        var _offset = keyframe.offset || null;
-        // var _easing = keyframe.easing || null; we'll get to that later...
-        var _effects = keyframes.map(function (obj) {
-          var _keys = win.Object.keys(obj).filter(function (key) {
-            return key !== 'offset' && key !== 'easing';
-          });
-          return getCSSProperty(_element,_keys[0]) + ': ' + obj[_keys[0]];
-        });
-
-        if (idx === 0) {
-          return '0% {' + _effects[idx] + '}';
-        }
-
-        if (idx === (keyframes.length - 1)) {
-          return '100% {' + _effects[idx] + '}';
-        }
-
-        if (!!_offset && _offset > 0 && _offset < 1) {
-          return _offset * 100 + '% {' + _effects[idx] + '}';
-        }
-
-        return 100 / (idx + 1 * 100) + '% {' + _effects[idx] + '}';
-
-      }).join('') + '}';
-
-    doc.head.insertAdjacentHTML('beforeEnd', '<style>'+ _keyframes +'</style>');
-    _element.style.animationDuration = options.duration ? options.duration + 'ms' : options + 'ms' || 'initial';
-    _element.style.animationTimingFunction = options.easing || 'initial';
-    _element.style.animationIterationCount = (options.iterations === Infinity ? 'infinite' : options.iterations) || 1;
-    _element.style.animationDirection = options.direction || 'initial';
-    _element.style.animationFillMode = options.fill || 'initial';
-    _element.style.animationDelay = options.delay || 'initial';
-    _element.style.animationName = _name || 'initial';
+  // Double-check WAAPI is not available
+  if ('animate' in Element.prototype) {
+    return;
   }
 
-  function getCSSProperty (element, property) {
-    var _properties = element.style;
-    var _partial;
+  // Extend Element.prototype to create an API compatible with future syntax
+  Element.prototype.animate = function (animations, options) {
 
-    if (property in _properties) {
-      return property;
+    var _element = this;
+
+    // We want the animation to have a unique name,
+    // to avoid conflicts with any existing CSS animations
+    var _animation_name = createAnimationName(win.Date.now(), _element);
+
+    doc.head.insertAdjacentHTML('beforeEnd', '<style>@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
+
+    // apply animation options
+    _element.style.animationDuration       = options.duration ? options.duration + 'ms' : options + 'ms' || 'initial';
+    _element.style.animationIterationCount = options.iterations === Infinity ? 'infinite' : options.iterations || 1;
+    _element.style.animationTimingFunction = options.easing    || 'initial';
+    _element.style.animationDirection      = options.direction || 'initial';
+    _element.style.animationFillMode       = options.fill      || 'initial';
+    _element.style.animationDelay          = options.delay     || 'initial';
+    _element.style.animationName           = _animation_name   || 'initial';
+  }
+
+  function generateCSSKeyframes (element, js_keyframes) {
+    return js_keyframes.map(function (keyframe, idx, arr) {
+
+      // initialise the string which will contain all of the JS properties reformatted as CSS properties
+      var _effects = '';
+
+      // offset corresponds to percentage keyframes expressed as a decimal
+      // according to spec, keyframes must be in ascending order, so this poses no issue
+      var _offset = keyframe.offset || null;
+
+      // WAAPI allows variance in timing-function between keyframes
+      var _easing = keyframe.easing || null;
+
+      // To convert JS keyframes to CSS keyframes, we need to get the object keys,
+      // but JS keyframes can come with baggage...
+      var _keys = win.Object.keys(keyframe).filter(function (key) {
+        return key !== 'offset' && key !== 'easing';
+      });
+
+      // The only sane way to amend the timing function:
+      // inject a new value for the property in the CSS itself.
+      // We can afford to do this, because CSS3 animation overrides even attribute styles
+      // Only an !important declaration can overrule CSS3 animation.
+      if (!!_easing) {
+        _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + ';animation-timing-function:' + _easing + ';';
+        return buildKeyframeString(_effects, _offset, idx, arr.length);
+      }
+
+      _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]];
+      return buildKeyframeString(_effects, _offset, idx, arr.length);
+
+    }).join('');
+  }
+
+  function buildKeyframeString (effects, offset, idx, len) {
+
+    console.log(effects,offset,idx,len);
+    // it's the first object in the keyframes array,
+    // or there's only one keyframe, therefore it's 0%
+    if (idx === 0) {
+      return '0% {' + effects + '}';
     }
 
-    _partial = property.substr(0, 1).toUppercase() + property.substr(1);
+    // it's the last object in the keyframes array, therefore it's 100%
+    if (len > 0 && idx === (len - 1)) {
+      return '100% {' + effects + '}';
+    }
+
+    // there are multiple keyframes, and an offset has been specified between 0 and 1,
+    // convert decimal to percentage
+    if (!!offset && offset > 0 && offset < 1) {
+      return offset * 100 + '% {' + effects + '}';
+    }
+
+    // there are multiple keyframes, but no offsets were specified,
+    // so Spock gives it his 'best shot':
+    return 100 / (idx + 1 * 100) + '% {' + effects + '}';
+  }
+
+  function getCSSProperty (element, css_property) {
+    var _css_properties = element.style;
+    var _js_property = '';
+
+    // if the standardised property is supported without a vendor prefix, return it
+    if (css_property in _css_properties) {
+      return css_property;
+    }
+
+    // 'transform' -> 'vendorTransform'
+    _js_property = css_property.substr(0,1).toUppercase() + css_property.substr(1);
 
     switch (true) {
-      case !!(('webkit' + _partial) in _properties):
-      case !!(('Webkit' + _partial) in _properties):
-        return '-webkit-' + property;
 
-      case !!(('moz' + _partial) in _properties):
-      case !!(('Moz' + _partial) in _properties):
-        return '-moz-' + property;
+      // Webkit/Blink
+      case !!(('webkit' + _js_property) in _css_properties):
+      case !!(('Webkit' + _js_property) in _css_properties):
+        return '-webkit-' + css_property;
 
-      case !!(('ms' + _partial) in _properties):
-      case !!(('Ms' + _partial) in _properties):
-        return '-ms-' + property;
+      // Gecko
+      case !!(('moz' + _js_property) in _css_properties):
+      case !!(('Moz' + _js_property) in _css_properties):
+        return '-moz-' + css_property;
 
-      case !!(('o' + _partial) in _properties):
-      case !!(('O' + _partial) in _properties):
-        return '-o-' + property;
+      // Trident
+      case !!(('ms' + _js_property) in _css_properties):
+      case !!(('Ms' + _js_property) in _css_properties):
+        return '-ms-' + css_property;
 
+      // Presto
+      case !!(('o' + _js_property) in _css_properties):
+      case !!(('O' + _js_property) in _css_properties):
+        return '-o-' + css_property;
+
+      // The property is not supported or inaccessible from JS
       default:
-        return property;
+        return css_property;
     }
+  }
+
+  // Generate a unique identifier for the animation to be added to the stylesheet
+  function createAnimationName (current_time, element) {
+    return 'WAAPIS-' + current_time.toString().substr(0,4) + ([].slice.call(document.getElementsByTagName('*')).indexOf(element)).toString();
   }
 
 })(window, document);
