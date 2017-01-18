@@ -16,7 +16,11 @@ It cannot be denied, however, that CSS3 Animations are silky-smooth, even on old
 
 The official, native WAAPI is also silky-smooth in the two browsers that support it, but that big ass polyfill I mentioned doesn't quite match it. 
 
-So this library basically just waits for the API call (extending `Element.prototype` if `animate` is not found in the aforementioned prototype chain) and uses the same parameters to dynamically carve a set of keyframes into a `<style>` element, setting the appropriate `animation-` properties on the element to be animated. 
+So this library basically just waits for the API call (extending `Element.prototype` if `animate` is not found in the aforementioned prototype chain) and uses the same parameters to dynamically carve a set of keyframes into a `<style>` element, setting the appropriate `animation-` properties on the element to be animated.
+
+If you're looking for timeline/scheduling animations, and so on, you're probably seething at the casual character of this library.
+
+But I must remind you that you can use [CSS Animation events like `animationend`, `animationstart`, and `animationiteration`](https://css-tricks.com/controlling-css-animations-transitions-javascript/). So... problem solved! Sort of...
 
 ## Can I use it?
 Sure. But here's the rub: this lib currently requires ES5 to work. Sorry IE8.
@@ -77,4 +81,5 @@ Web Animations and CSS Animations offer significant performance gains, and this 
 
 > As for the performance of the Web Animations API, it is identical to CSS Animations/Transitions. It is exactly the same code running both. The whole purpose of Web Animations API is to be a lower-level API on top of which CSS Animations/Transitions run. (And SMIL too, for that matter.)
 
-Right, you've been warned.
+## Still here?
+You've been warned. This is by no means the answer to all problems in web animation. But it is Apache licensed (unlike GSAP) and it's fast, easy to use, and fun! You can feel like a rockstar who doesn't care about Safari 7 or Chrome 40!
