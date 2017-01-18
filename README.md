@@ -19,6 +19,8 @@ So this library basically just waits for the API call (extending Element.prototy
 ## Can I use it?
 Sure. But here's the rub: this lib currently requires ES5 to work. Sorry IE8.
 
+This lib relies primarily on functional Array methods, i.e. [].map, [].filter, [].indexOf. It also depends on Object.keys and Date.now, all of which are straightforward to polyfill separately -- but I would not bother, since CSS animation is not going to be supported in any browser that *lacks* these basic ES5 features.
+
 ## Example call
 You will be able to use this lib as though it was the WAAPI itself. Your WAAPI call might look like this:
 
@@ -31,6 +33,8 @@ You will be able to use this lib as though it was the WAAPI itself. Your WAAPI c
 and the polyfill will handle the same syntax in a browser without WAAPI.
 
 ## But there's GSAP, Velocity... why do I need this?
+WAAPI offers significant gains, and this shiv is intended for those who want to use WAAPI today rather than waiting five years for IE11 to die or simply casting aside non-trivial numbers of users. If you need extreme control, great performance, and timelining, you'd have picked GSAP before WAAPI anyway. This lib is for people who don't need extreme control, want great performance and also don't want to use a heavy lib.
+
 [Brian Birtles said it best](https://css-tricks.com/comparison-animation-technologies/#comment-1601471):
 
 > The performance advantage of CSS Animations/Transitions is that these animations that can be composited on the GPU, can also be delegated to a separate thread or process. This allows them to continue running smoothly even when the main thread is busy. That’s something that scripted animation simply cannot do unless they use CSS Animations/Transitions or the Web Animations API under the hood. (And it’s a very significant optimization on low-end mobile devices!)
