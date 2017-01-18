@@ -24,13 +24,13 @@
     doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapis-id='+ _animation_name +'>@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
     // Apply animation options
-    _element.style.animationDuration       = options.duration ? options.duration + 'ms' : options + 'ms' || 'initial';
-    _element.style.animationIterationCount = options.iterations === Infinity ? 'infinite' : options.iterations || 1;
-    _element.style.animationTimingFunction = options.easing    || 'initial';
-    _element.style.animationDirection      = options.direction || 'initial';
-    _element.style.animationFillMode       = options.fill      || 'initial';
-    _element.style.animationDelay          = options.delay     || 'initial';
-    _element.style.animationName           = _animation_name   || 'initial';
+    _element.style.animationDuration       = options.duration ? options.duration + 'ms' : options + 'ms' || '0s';
+    _element.style.animationIterationCount = options.iterations === Infinity ? 'infinite' : options.iterations || '1';
+    _element.style.animationTimingFunction = options.easing    || 'linear';
+    _element.style.animationDirection      = options.direction || 'normal';
+    _element.style.animationFillMode       = options.fill      || '';
+    _element.style.animationDelay          = options.delay     || '0s';
+    _element.style.animationName           = _animation_name   || '';
   }
 
   function generateCSSKeyframes (element, js_keyframes) {
