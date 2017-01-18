@@ -18,3 +18,12 @@ So this library basically just waits for the API call (extending Element.prototy
 Sure.
 
 But it's nowhere near production-ready and currently requires ES5 to work.
+
+## Example call
+You will be able to use this lib as though it was the WAAPI itself, so:
+
+    document.querySelector('header').animate([
+      { opacity: 1 },
+      { opacity: 0.1, offset: 0.7 },
+      { opacity: 0 }
+    ], 2000);
