@@ -19,9 +19,11 @@
     // to avoid conflicts with any existing CSS animations
     var _animation_name = createAnimationName(win.Date.now(), _element);
 
-    doc.head.insertAdjacentHTML('beforeEnd', '<style>@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
+    // Append the _animation_name to the style element itself as a data-attribute
+    // this could be used to forcibly remove the animation if desired...
+    doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapis-id='+ _animation_name +'>@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
-    // apply animation options
+    // Apply animation options
     _element.style.animationDuration       = options.duration ? options.duration + 'ms' : options + 'ms' || 'initial';
     _element.style.animationIterationCount = options.iterations === Infinity ? 'infinite' : options.iterations || 1;
     _element.style.animationTimingFunction = options.easing    || 'initial';
@@ -34,14 +36,14 @@
   function generateCSSKeyframes (element, js_keyframes) {
     return js_keyframes.map(function (keyframe, idx, arr) {
 
-      // initialise the string which will contain all of the JS properties reformatted as CSS properties
+      // Initialise the string which will contain all of the JS properties reformatted as CSS properties.
       var _effects = '';
 
-      // offset corresponds to percentage keyframes expressed as a decimal
-      // according to spec, keyframes must be in ascending order, so this poses no issue
+      // Offset corresponds to percentage keyframes expressed as a decimal.
+      // According to spec, keyframes must be in ascending order, so this poses no issue
       var _offset = keyframe.offset || null;
 
-      // WAAPI allows variance in timing-function between keyframes
+      // WAAPI allows variance in timing-function between keyframes.
       var _easing = keyframe.easing || null;
 
       // To convert JS keyframes to CSS keyframes, we need to get the object keys,
@@ -51,7 +53,7 @@
       });
 
       // The only sane way to amend the timing function:
-      // inject a new value for the property in the CSS itself.
+      //   Inject a new value for the property in the CSS itself.
       // We can afford to do this, because CSS3 animation overrides even attribute styles
       // Only an !important declaration can overrule CSS3 animation.
       if (!!_easing) {
@@ -67,25 +69,24 @@
 
   function buildKeyframeString (effects, offset, idx, len) {
 
-    console.log(effects,offset,idx,len);
-    // it's the first object in the keyframes array,
+    // It's the first object in the keyframes array,
     // or there's only one keyframe, therefore it's 0%
     if (idx === 0) {
       return '0% {' + effects + '}';
     }
 
-    // it's the last object in the keyframes array, therefore it's 100%
+    // It's the last object in the keyframes array, therefore it's 100%
     if (len > 0 && idx === (len - 1)) {
       return '100% {' + effects + '}';
     }
 
-    // there are multiple keyframes, and an offset has been specified between 0 and 1,
+    // There are multiple keyframes, and an offset has been specified between 0 and 1,
     // convert decimal to percentage
     if (!!offset && offset > 0 && offset < 1) {
       return offset * 100 + '% {' + effects + '}';
     }
 
-    // there are multiple keyframes, but no offsets were specified,
+    // There are multiple keyframes, but no offsets were specified,
     // so Spock gives it his 'best shot':
     return 100 / (idx + 1 * 100) + '% {' + effects + '}';
   }
@@ -94,7 +95,7 @@
     var _css_properties = element.style;
     var _js_property = '';
 
-    // if the standardised property is supported without a vendor prefix, return it
+    // If the standardised property is supported without a vendor prefix, return it
     if (css_property in _css_properties) {
       return css_property;
     }
