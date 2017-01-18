@@ -8,12 +8,11 @@
 
   Element.prototype.animate = function (animations, options) {
     var _element = this;
-    var _name = 'waapip-' + win.Date.now();
+    var _name = 'was-' + win.Date.now();
     var _keyframes = '@keyframes ' + _name + '{' +
       animations.map(function (keyframe, idx, keyframes) {
         var _offset = keyframe.offset || null;
-        var _easing = keyframe.easing || null;
-
+        // var _easing = keyframe.easing || null; we'll get to that later...
         var _effects = keyframes.map(function (obj) {
           var _keys = win.Object.keys(obj).filter(function (key) {
             return key !== 'offset' && key !== 'easing';
