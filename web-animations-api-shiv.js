@@ -133,7 +133,10 @@
 
   // Generate a unique identifier for the animation to be added to the stylesheet
   function createAnimationName (current_time, element) {
-    return 'WAAPIS-' + current_time.toString().substr(0,4) + ([].slice.call(document.getElementsByTagName('*')).indexOf(element)).toString();
+    // Adding the element's index in the DOM results in better 'uniqueness',
+    // because even if two times are the same, the index in the DOM will be specific
+    // 'WAAPIS-' + '1484748333026' + '02'
+    return 'WAAPIS-' + current_time.toString() + ([].slice.call(doc.getElementsByTagName('*')).indexOf(element)).toString();
   }
 
 })(window, document);
