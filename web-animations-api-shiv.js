@@ -21,7 +21,7 @@
 
     // Append the _animation_name to the style element itself as a data-attribute
     // this could be used to forcibly remove the animation if desired...
-    doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapis-id='+ _animation_name +'>@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
+    doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapis-id="'+ _animation_name +'">@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
     // Apply animation options
     _element.style.animationDuration       = options.duration ? options.duration + 'ms' : options + 'ms' || '0s';
