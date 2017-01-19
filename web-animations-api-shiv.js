@@ -11,7 +11,7 @@
     doc.head.insertAdjacentHTML('beforeEnd', 
                                 '<style data-waapisid="' + _animation_name + '"> \
                                 @' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{ \ ' + 
-                                generateCSSKeyframes(_element, js_keyframes) + '} \
+                                generateCSSKeyframes(_element, js_keyframes) + '\ } \
                                 </style>');
 
     _element.setAttribute('style', getAttributeStyles(_element, {
