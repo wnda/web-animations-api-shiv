@@ -81,9 +81,9 @@
   }
   
   function getAttributeStyles (element, css) {
-    return win.Object.keys(css).reduce(function (acc, next) {
-      return acc + getCSSProperty(element, next) + ': ' + css[next] + ';';
-    });
+    return win.Object.keys(css).map(function (pair) {
+      return getCSSProperty(element, pair[0]) + ': ' + css[pair[0]] + ';';
+    }).join('');
   }
 
   function createAnimationName (current_time, element) {
