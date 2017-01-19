@@ -88,9 +88,9 @@
   
   function camelCaseToHyphenated (str) {
     return str.split('').map(function (char) {
-      if (char === char.toLowerCase()){ return char; } 
+      if (char === char.toLowerCase()) { return char; } 
       else { return '-' + char.toLowerCase() }
-    }).join('')
+    }).join('');
   }
   
   function addStylesToElement(element, css) {
