@@ -12,7 +12,7 @@
       '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
         generateCSSKeyframes(_element, js_keyframes) + 
       '}' + 
-      '.' + _animation_name + ' {' +
+      '[data-waapiel="' + _animation_name + '"] {' +
         getAttributeStyles(_element, {
           'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
           'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
