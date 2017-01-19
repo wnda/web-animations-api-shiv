@@ -64,7 +64,7 @@
   
   function getVendorPrefix (element, prop) {
     var _js_props = element.style;
-    var _js_prop = prop.substr(0,1).toUppercase() + prop.substr(1);
+    var _js_prop = prop.substr(0,1).toUpperCase() + prop.substr(1);
     return prop in _js_props ? 
              '' : 
        'webkit' + _js_prop in _js_props ? '-webkit-': 
