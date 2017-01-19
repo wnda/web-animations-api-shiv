@@ -4,7 +4,7 @@
 
   if ('animate' in Element.prototype) { return; }
 
-  Element.prototype.animate = function (animations, options) {
+  HTMLElement.prototype.animate = function (animations, options) {
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
@@ -19,8 +19,20 @@
       'animationDelay'          = options.delay     || '0s';
       'animationName'           = _animation_name   || '';
     });
-  }
+  };
+  
+  HTMLElement.prototype.playState = function () {
+    return win.getComputedStyle(this).animationPlayState || '';
+  };
+  
+  HTMLElement.prototype.play = function () {
+    this.animationPlayState = 'running';
+  };
 
+  HTMLElement.prototype.pause = function () {
+    this.animationPlayState = 'paused';
+  };
+  
   function generateCSSKeyframes (element, js_keyframes) {
     return js_keyframes.map(function (keyframe, idx, arr) {
       var _offset  = keyframe.offset || null;
