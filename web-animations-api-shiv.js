@@ -82,7 +82,7 @@
   
   function getAttributeStyles (element, css) {
     return win.Object.keys(css).map(function (pair) {
-      return getCSSProperty(element, pair[0]) + ': ' + css[pair[0]] + ';';
+      return getCSSProperty(element, pair) + ': ' + css[pair] + ';';
     }).join('');
   }
 
