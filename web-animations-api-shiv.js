@@ -1,6 +1,4 @@
-/*
-  WEB ANIMATIONS API SHIV :: https://github.com/wnda/web-animations-api-shiv/
-*/
+/* WEB ANIMATIONS API SHIV :: https://github.com/wnda/web-animations-api-shiv */
 ;(function (win, doc) {
   'use strict';
 
