@@ -7,6 +7,7 @@
   HTMLElement.prototype.animate = function (js_keyframes, options) {
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
+    
     doc.head.insertAdjacentHTML('beforeEnd', 
       '<style data-waapiid="' + _animation_name + '">' +
       '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
@@ -25,30 +26,32 @@
       '}' +
       '</style>'
     );
+    
     _element.setAttribute('data-waapiel', _animation_name);
-    return _element;
-  };
-  
-  HTMLElement.prototype.playState = function () {
-    var _element = this;
-    return win.getComputedStyle(_element)[getVendorPrefix(_element, 'animationPlayState', false)] || '';
-  };
-  
-  HTMLElement.prototype.play = function () {
-    var _element = this;
-    _element.style[getCSSProperty(_element, 'animationPlayState')] = 'running !important';
-  };
+    
+    _element.playState = (function () {
+      return win.getComputedStyle(_element)[getVendorPrefix(_element, 'animationPlayState', false)] || '';
+    }).call(_element);
+    
+    _element.play = function () {
+      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'running !important';
+    };
 
-  HTMLElement.prototype.pause = function () {
-    var _element = this;
-    _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused !important';
-  };
-  
-  HTMLElement.prototype.cancel = function () {
-    var _element = this;
-    var _stylesheet = doc.querySelector('[data-waapiid="' + _element.getAttribute('data-waapiel') + '"]');
-    _stylesheet.parentNode.removeChild(_stylesheet);
-    _element.removeAttribute('data-waapiel');
+    _element.pause = function () {
+      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused !important';
+    };
+    
+    _element.cancel = function () {
+      var _stylesheet = doc.querySelector('[data-waapiid="' + _element.getAttribute('data-waapiel') + '"]');
+      _stylesheet.parentNode.removeChild(_stylesheet);
+      _element.playState = void 0;
+      _element.play = void 0;
+      _element.pause = void 0;
+      _element.cancel = void 0;
+      _element.removeAttribute('data-waapiel');
+    };
+    
+    return _element;
   };
   
   function generateCSSKeyframes (element, js_keyframes) {
