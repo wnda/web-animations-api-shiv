@@ -60,9 +60,7 @@
 
     if (prop in _js_properties) { return prop; }
 
-    if (prop.toLowerCase() !== prop) { 
-      _js_prop = prop.substr(0,1).toUppercase() + prop.substr(1);
-    }
+    _js_prop = prop.substr(0,1).toUppercase() + prop.substr(1);
 
     switch (!0) {
       case !!(('webkit' + _js_prop) in _js_properties):
