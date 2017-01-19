@@ -8,7 +8,7 @@
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
-    doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapisid="'+ _animation_name +'">@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
+    doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapisid="'+ _animation_name +'">@' + getVendorPrefix(_element, 'animationName') + 'keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
     addStylesToElement(_element, {
       'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s';
@@ -82,6 +82,18 @@
       default:
         return _css_prop;
     }
+  }
+  
+  function getVendorPrefix (element, prop) {
+    var _js_props = element.style;
+    var _js_prop = prop.substr(0,1).toUppercase() + prop.substr(1);
+    return prop in _js_props ? 
+             '' : 
+       'webkit' + _js_prop in _js_props ? '-webkit-': 
+          'moz' + _js_prop in _js_props ? '-moz-': 
+           'ms' + _js_prop in _js_props ? '-ms-': 
+            'o' + _js_prop in _js_props ? '-o-': 
+             '';
   }
   
   function camelCaseToHyphenated (str) {
