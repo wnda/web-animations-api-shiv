@@ -14,7 +14,7 @@
                                 '{' + generateCSSKeyframes(_element, animations) + 
                                 '}</style>');
 
-    addStylesToElement(_element, {
+    _element.setAttribute('style', getAttributeStyles(_element, {
       'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
       'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
       'animationTimingFunction': options.easing || 'linear',
@@ -22,7 +22,7 @@
       'animationFillMode': options.fill || '',
       'animationDelay': options.delay || '0s',
       'animationName': _animation_name || ''
-    });
+    }));
   };
   
   HTMLElement.prototype.playState = function () {
@@ -80,9 +80,9 @@
     }).join('');
   }
   
-  function addStylesToElement (element, css) {
-    return win.Object.keys(css).forEach(function (prop) {
-      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[getCSSProperty(element, prop)] = css[prop]; }
+  function getAttributeStyles (element, css) {
+    return win.Object.keys(css).reduce(function (acc, next) {
+      return acc + ': ' css[acc] + ';' + next + ': ' + css[next] + ';';
     });
   }
 
