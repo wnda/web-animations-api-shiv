@@ -51,7 +51,7 @@
   }
 
   function buildKeyframeString (effects, offset, idx, len) {
-    switch (true) {
+    switch (!0) {
       case !!(!!offset && (offset < 0 || offset > 1)):
         return '';
       case !!(idx === 0):
