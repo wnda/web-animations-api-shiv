@@ -80,6 +80,8 @@ They're more powerful in terms of scheduling animations, chaining them up and ma
 
 Velocity and GSAP both use a different API to the offical WAAPI standard, so if you don't want to get bogged down with them, or if you want to minimise the size of external libraries you're using or the number of third-party programs you're using, or if you don't have complex timelining requirements, this might be useful to you.
 
+I mean, GSAP's TweenMax.min.js is 36KB. That's just a bit of GSAP. WAAPI is 0KB where natively supported, and this shiv is 65 SLOC. 3KB *unminified*.
+
 If your eyebrow is raised, you can probably close the tab now.
 
 If your eyebrows are at rest, I will point out one other significant detail: if you want to learn something awesome, and you want the best performance *in all browsers* (not just Chrome), **use GSAP**. It's faster. Don't believe me? [Read this article by GSAP's creator, Jack Doyle](https://css-tricks.com/myth-busting-css-animations-vs-javascript/). Remember, supporting browsers isn't just about polyfills; you need to consider that the actual rendering in IE10/IE11 is atrocious, and JavaScript will outperform CSS Animation -- this story will be true in many browsers and browser versions.
