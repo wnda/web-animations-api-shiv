@@ -52,14 +52,21 @@
     switch (!0) {
       case !!(!!offset && (offset < 0 || offset > 1)):
         return '';
+        
+      case !!(idx === 0 && idx === (len - 1)):
+        return '0%, 100% {' + effects + '}';
+        
       case !!(idx === 0):
       case !!(!!offset && offset === 0):
         return '0% {' + effects + '}';
-      case !!(len > 0 && idx === (len - 1)):
+        
+      case !!(idx === (len - 1)):
       case !!(!!offset && offset === 1):
         return '100% {' + effects + '}';
+        
       case !!(!!offset && offset > 0 && offset < 1):
         return (offset * 1e2).toFixed(2) + '% {' + effects + '}';
+        
       default:
         return (((idx + 1) / len) * 1e2).toFixed(2) + '% {' + effects + '}';
     }
