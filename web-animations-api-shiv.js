@@ -26,11 +26,11 @@
   };
   
   HTMLElement.prototype.play = function () {
-    this.animationPlayState = 'running';
+    this.style[getCSSProperty('animationPlayState')] = 'running';
   };
 
   HTMLElement.prototype.pause = function () {
-    this.animationPlayState = 'paused';
+    this.style[getCSSProperty('animationPlayState')] = 'paused';
   };
   
   function generateCSSKeyframes (element, js_keyframes) {
@@ -85,7 +85,7 @@
   
   function addStylesToElement(element, css) {
     return win.Object.keys(css).forEach(function (prop) {
-      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[prop] = css[prop]; }
+      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[getCSSProperty(prop)] = css[prop]; }
     });
   }
 
