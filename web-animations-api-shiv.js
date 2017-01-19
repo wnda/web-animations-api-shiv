@@ -25,7 +25,7 @@
       '}' +
       '</style>'
     );
-    _element.classList.add(_animation_name);
+    _element.setAttribute('data-waapiel', _animation_name);
     return _element;
   };
   
@@ -42,6 +42,13 @@
   HTMLElement.prototype.pause = function () {
     var _element = this;
     _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused !important';
+  };
+  
+  HTMLElement.prototype.cancel = function () {
+    var _element = this;
+    var _stylesheet = doc.querySelector('[data-waapiid="' + _element.getAttribute('data-waapiel') + '"]');
+    _stylesheet.parentNode.removeChild(_stylesheet);
+    _element.removeAttribute('data-waapiel');
   };
   
   function generateCSSKeyframes (element, js_keyframes) {
