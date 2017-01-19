@@ -8,7 +8,7 @@
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
     doc.head.insertAdjacentHTML('beforeEnd', 
-                                '<style data-waapisid="' + _animation_name + '">' +
+                                '<style data-waapiid="' + _animation_name + '">' +
                                 '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
                                   generateCSSKeyframes(_element, js_keyframes) + 
                                 '}' +
@@ -103,6 +103,6 @@
   }
 
   function createAnimationName (current_time, element) {
-    return 'WAAPIS-' + current_time.toString() + ([].slice.call(doc.getElementsByTagName('*')).indexOf(element)).toString();
+    return 'WAAPI-' + current_time.toString() + ([].slice.call(doc.getElementsByTagName('*')).indexOf(element)).toString();
   }
 })(window, document);
