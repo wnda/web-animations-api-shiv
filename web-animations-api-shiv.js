@@ -51,11 +51,20 @@
   }
 
   function buildKeyframeString (effects, offset, idx, len) {
-    if (!!offset && (offset < 0 || offset > 1)) { return ''; }
-    if (idx === 0 || !!offset && offset === 0) { return '0% {' + effects + '}'; }
-    if (len > 0 && idx === (len - 1) || !!offset && offset === 1) { return '100% {' + effects + '}'; }
-    if (!!offset && offset > 0 && offset < 1) { return (offset * 100).toFixed(2) + '% {' + effects + '}'; }
-    return (100 / (idx + 1 * 100)).toFixed(2) + '% {' + effects + '}';
+    switch (true) {
+      case !!(!!offset && (offset < 0 || offset > 1)):
+        return '';
+      case !!(idx === 0):
+      case !!(!!offset && offset === 0):
+        return '0% {' + effects + '}';;
+      case !!(len > 0 && idx === (len - 1)):
+      case !!(!!offset && offset === 1):
+        return '100% {' + effects + '}';
+      case !!(!!offset && offset > 0 && offset < 1):
+        return (offset * 100).toFixed(2) + '% {' + effects + '}';
+      default:
+        return (100 / (idx + 1 * 100)).toFixed(2) + '% {' + effects + '}';
+    }
   }
 
   function getCSSProperty (element, prop) {
