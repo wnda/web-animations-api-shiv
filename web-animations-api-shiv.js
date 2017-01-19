@@ -25,17 +25,14 @@
 
   function generateCSSKeyframes (element, js_keyframes) {
     return js_keyframes.map(function (keyframe, idx, arr) {
-      var _offset = keyframe.offset || null;
-      var _easing = keyframe.easing || null;
-      var _keys   = win.Object.keys(keyframe).filter(function (key) {
-                      return key !== 'offset' && key !== 'easing';
-                    });
+      var _offset  = keyframe.offset || null;
+      var _easing  = keyframe.easing || null;
+      var _keys    = win.Object.keys(keyframe).filter(function (key) { return key !== 'offset' && key !== 'easing'; });
       var _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]];
 
       if (!!_easing) { _effects += ';animation-timing-function:' + _easing + ';'; }
       
       return buildKeyframeString(_effects, _offset, idx, arr.length);
-
     }).join('');
   }
 
@@ -54,8 +51,7 @@
 
     _js_property = css_property.substr(0,1).toUppercase() + css_property.substr(1);
 
-    switch (true) {
-
+    switch (!0) {
       case !!(('webkit' + _js_property) in _css_properties):
       case !!(('Webkit' + _js_property) in _css_properties):
         return '-webkit-' + css_property;
