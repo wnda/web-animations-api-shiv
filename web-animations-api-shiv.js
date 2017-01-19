@@ -83,7 +83,7 @@
   
   function addStylesToElement (element, css) {
     return win.Object.keys(css).forEach(function (prop) {
-      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[getCSSProperty(prop)] = css[prop]; }
+      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[getCSSProperty(element, prop)] = css[prop]; }
     });
   }
 
