@@ -56,7 +56,7 @@
         return '';
       case !!(idx === 0):
       case !!(!!offset && offset === 0):
-        return '0% {' + effects + '}';;
+        return '0% {' + effects + '}';
       case !!(len > 0 && idx === (len - 1)):
       case !!(!!offset && offset === 1):
         return '100% {' + effects + '}';
