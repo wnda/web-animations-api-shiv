@@ -80,7 +80,7 @@ They're more powerful in terms of scheduling animations, chaining them up and ma
 
 Velocity and GSAP both use a different API to the offical WAAPI standard, so if you don't want to get bogged down with them, or if you want to minimise the size of external libraries you're using or the number of third-party programs you're using, or if you don't have complex timelining requirements, this might be useful to you.
 
-I mean, GSAP's TweenMax.min.js is 36KB. That's just a bit of GSAP. WAAPI is 0KB where natively supported, and this shiv is 65 SLOC. 3KB *unminified*.
+I mean, GSAP's TweenMax.min.js is 36KB. That's just a bit of GSAP. WAAPI is 0KB where natively supported, and this shiv is 88 SLOC. 4.1KB *unminified*.
 
 If your eyebrow is raised, you can probably close the tab now.
 
