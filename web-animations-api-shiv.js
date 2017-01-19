@@ -4,13 +4,11 @@
 ;(function (win, doc) {
   'use strict';
 
-  if ('animate' in Element.prototype) {
-    return;
-  }
+  if ('animate' in Element.prototype) { return; }
 
   Element.prototype.animate = function (animations, options) {
-    var _element = this;
-    var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
+    var _element = this,
+        _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
     doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapisid="'+ _animation_name +'">@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
@@ -27,38 +25,26 @@
 
   function generateCSSKeyframes (element, js_keyframes) {
     return js_keyframes.map(function (keyframe, idx, arr) {
-      var _effects = '';
-      var _offset = keyframe.offset || null;
-      var _easing = keyframe.easing || null;
-      var _keys = win.Object.keys(keyframe).filter(function (key) {
+      var _effects = '',
+          _offset = keyframe.offset || null,
+          _easing = keyframe.easing || null,
+          _keys = win.Object.keys(keyframe).filter(function (key) {
         return key !== 'offset' && key !== 'easing';
       });
-
-      if (!!_easing) {
-        _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + ';animation-timing-function:' + _easing + ';';
-        return buildKeyframeString(_effects, _offset, idx, arr.length);
-      }
-
+      
       _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]];
+
+      if (!!_easing) { _effects += ';animation-timing-function:' + _easing + ';'; }
+      
       return buildKeyframeString(_effects, _offset, idx, arr.length);
 
     }).join('');
   }
 
   function buildKeyframeString (effects, offset, idx, len) {
-
-    if (idx === 0) {
-      return '0% {' + effects + '}';
-    }
-
-    if (len > 0 && idx === (len - 1)) {
-      return '100% {' + effects + '}';
-    }
-
-    if (!!offset && offset > 0 && offset < 1) {
-      return offset * 100 + '% {' + effects + '}';
-    }
-
+    if (idx === 0) { return '0% {' + effects + '}'; }
+    if (len > 0 && idx === (len - 1)) { return '100% {' + effects + '}'; }
+    if (!!offset && offset > 0 && offset < 1) { return offset * 100 + '% {' + effects + '}'; }
     return 100 / (idx + 1 * 100) + '% {' + effects + '}';
   }
 
@@ -66,9 +52,7 @@
     var _css_properties = element.style;
     var _js_property = '';
 
-    if (css_property in _css_properties) {
-      return css_property;
-    }
+    if (css_property in _css_properties) { return css_property; }
 
     _js_property = css_property.substr(0,1).toUppercase() + css_property.substr(1);
 
@@ -97,9 +81,7 @@
   
   function addStylesToElement(element, css) {
     return win.Object.keys(css).forEach(function (prop) {
-      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) {
-        element.style[prop] = css[prop];
-      }
+      if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[prop] = css[prop]; }
     });
   }
 
