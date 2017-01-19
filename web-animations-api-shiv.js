@@ -9,10 +9,11 @@
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
     doc.head.insertAdjacentHTML('beforeEnd', 
-                                '<style data-waapisid="' + _animation_name + '"> \
-                                @' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{ \ ' + 
-                                generateCSSKeyframes(_element, js_keyframes) + '\ } \
-                                </style>');
+                                '<style data-waapisid="' + _animation_name + '">' +
+                                '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
+                                  generateCSSKeyframes(_element, js_keyframes) + 
+                                '}' +
+                                '</style>');
 
     _element.setAttribute('style', getAttributeStyles(_element, {
       'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
