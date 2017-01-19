@@ -81,7 +81,9 @@
   }
   
   function getAttributeStyles (element, css) {
-    return win.Object.keys(css).map(function (pair) {
+    return win.Object.keys(css).filter(function (pair) {
+      return !!css[pair];
+    }).map(function (pair) {
       return getCSSProperty(element, pair) + ': ' + css[pair] + ';';
     }).join('');
   }
@@ -89,5 +91,4 @@
   function createAnimationName (current_time, element) {
     return 'WAAPIS-' + current_time.toString() + ([].slice.call(doc.getElementsByTagName('*')).indexOf(element)).toString();
   }
-
 })(window, document);
