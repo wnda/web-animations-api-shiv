@@ -11,13 +11,13 @@
     doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapisid="'+ _animation_name +'">@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
     addStylesToElement(_element, {
-      'animationDuration'       = options.duration ? options.duration + 'ms' : options + 'ms'       || '0s';
-      'animationIterationCount' = options.iterations === Infinity ? 'infinite' : options.iterations || '1';
-      'animationTimingFunction' = options.easing    || 'linear';
-      'animationDirection'      = options.direction || 'normal';
-      'animationFillMode'       = options.fill      || '';
-      'animationDelay'          = options.delay     || '0s';
-      'animationName'           = _animation_name   || '';
+      'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms'       || '0s';
+      'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1';
+      'animationTimingFunction': options.easing    || 'linear';
+      'animationDirection': options.direction || 'normal';
+      'animationFillMode': options.fill      || '';
+      'animationDelay': options.delay     || '0s';
+      'animationName': _animation_name   || '';
     });
   };
   
