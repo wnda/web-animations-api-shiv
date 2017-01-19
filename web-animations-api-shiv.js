@@ -82,7 +82,7 @@
   
   function getAttributeStyles (element, css) {
     return win.Object.keys(css).reduce(function (acc, next) {
-      return acc + ': ' css[acc] + ';' + next + ': ' + css[next] + ';';
+      return acc + ': ' + css[acc] + ';' + next + ': ' + css[next] + ';';
     });
   }
 
