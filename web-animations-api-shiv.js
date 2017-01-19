@@ -8,11 +8,12 @@
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
     doc.head.insertAdjacentHTML('beforeEnd', 
-                                '<style data-waapiid="' + _animation_name + '">' +
-                                '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
-                                  generateCSSKeyframes(_element, js_keyframes) + 
-                                '}' +
-                                '</style>');
+      '<style data-waapiid="' + _animation_name + '">' +
+      '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
+      generateCSSKeyframes(_element, js_keyframes) + 
+      '}' +
+      '</style>'
+    );
     _element.setAttribute('style', getAttributeStyles(_element, {
       'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
       'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
@@ -22,18 +23,22 @@
       'animationDelay': options.delay || '0s',
       'animationName': _animation_name || ''
     }));
+    return _element;
   };
   
   HTMLElement.prototype.playState = function () {
-    return win.getComputedStyle(this)[getVendorPrefix(this, 'animationPlayState', false)] || '';
+    var _element = this;
+    return win.getComputedStyle(_element)[getVendorPrefix(_element, 'animationPlayState', false)] || '';
   };
   
   HTMLElement.prototype.play = function () {
-    this.style[getCSSProperty(this, 'animationPlayState')] = 'running !important';
+    var _element = this;
+    _element.style[getCSSProperty(_element, 'animationPlayState')] = 'running !important';
   };
 
   HTMLElement.prototype.pause = function () {
-    this.style[getCSSProperty(this, 'animationPlayState')] = 'paused !important';
+    var _element = this;
+    _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused !important';
   };
   
   function generateCSSKeyframes (element, js_keyframes) {
