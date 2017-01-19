@@ -4,7 +4,7 @@
 
   if ('animate' in Element.prototype) { return; }
 
-  Element.prototype.animate = function (animations, options) {
+  HTMLElement.prototype.animate = function (animations, options) {
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
@@ -26,15 +26,15 @@
     });
   };
   
-  Element.prototype.playState = function () {
+  HTMLElement.prototype.playState = function () {
     return win.getComputedStyle(this).animationPlayState || '';
   };
   
-  Element.prototype.play = function () {
+  HTMLElement.prototype.play = function () {
     this.style[getCSSProperty(this, 'animationPlayState')] = 'running';
   };
 
-  Element.prototype.pause = function () {
+  HTMLElement.prototype.pause = function () {
     this.style[getCSSProperty(this, 'animationPlayState')] = 'paused';
   };
   
