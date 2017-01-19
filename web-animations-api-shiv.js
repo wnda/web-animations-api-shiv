@@ -16,13 +16,13 @@
                                 '}</style>');
 
     addStylesToElement(_element, {
-      'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s';
-      'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1';
-      'animationTimingFunction': options.easing || 'linear';
-      'animationDirection': options.direction || 'normal';
-      'animationFillMode': options.fill || '';
-      'animationDelay': options.delay || '0s';
-      'animationName': _animation_name || '';
+      'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
+      'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
+      'animationTimingFunction': options.easing || 'linear',
+      'animationDirection': options.direction || 'normal',
+      'animationFillMode': options.fill || '',
+      'animationDelay': options.delay || '0s',
+      'animationName': _animation_name || ''
     });
   };
   
@@ -81,7 +81,7 @@
     }).join('');
   }
   
-  function addStylesToElement(element, css) {
+  function addStylesToElement (element, css) {
     return win.Object.keys(css).forEach(function (prop) {
       if (!css.hasOwnProperty || css.hasOwnProperty(prop)) { element.style[getCSSProperty(prop)] = css[prop]; }
     });
