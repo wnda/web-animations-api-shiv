@@ -84,7 +84,7 @@
            'ms' + _js_prop in _js_props ? 'ms'     : 
             'o' + _js_prop in _js_props ? 'o'      : 
              '';
-    return !!css ? '-' + _prefix + '-' : _prefix;
+    return !!css && !!_prefix ? '-' + _prefix + '-' : _prefix;
   }
   
   function convertToCSSProp (str) {
