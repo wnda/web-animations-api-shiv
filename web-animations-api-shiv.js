@@ -42,10 +42,7 @@
       var _offset = keyframe.offset || null;
       var _easing = keyframe.easing || null;
       var _keys = win.Object.keys(keyframe).filter(function (key) { return key !== 'offset' && key !== 'easing'; });
-      var _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + ';';
-
-      if (!!_easing) { _effects += getCSSProperty(element, 'animationTimingFunction') + ':' + _easing + ';'; }
-      
+      var _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + ';' + !!_easing ? getCSSProperty(element, 'animationTimingFunction') + ':' + _easing + ';' : '';      
       return buildKeyframeString(_effects, _offset, idx, arr.length);
     }).join('');
   }
