@@ -30,11 +30,11 @@
   };
   
   HTMLElement.prototype.play = function () {
-    this.style[getCSSProperty(this, 'animationPlayState')] = 'running';
+    this.style[getCSSProperty(this, 'animationPlayState')] = 'running !important';
   };
 
   HTMLElement.prototype.pause = function () {
-    this.style[getCSSProperty(this, 'animationPlayState')] = 'paused';
+    this.style[getCSSProperty(this, 'animationPlayState')] = 'paused !important';
   };
   
   function generateCSSKeyframes (element, js_keyframes) {
