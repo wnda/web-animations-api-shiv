@@ -2,9 +2,9 @@
 ;(function (win, doc) {
   'use strict';
 
-  if ('animate' in HTMLElement.prototype) { return; }
+  if ('animate' in Element.prototype) { return; }
 
-  HTMLElement.prototype.animate = function (animations, options) {
+  Element.prototype.animate = function (animations, options) {
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
@@ -26,15 +26,15 @@
     });
   };
   
-  HTMLElement.prototype.playState = function () {
+  Element.prototype.playState = function () {
     return win.getComputedStyle(this).animationPlayState || '';
   };
   
-  HTMLElement.prototype.play = function () {
+  Element.prototype.play = function () {
     this.style[getCSSProperty(this, 'animationPlayState')] = 'running';
   };
 
-  HTMLElement.prototype.pause = function () {
+  Element.prototype.pause = function () {
     this.style[getCSSProperty(this, 'animationPlayState')] = 'paused';
   };
   
