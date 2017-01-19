@@ -9,9 +9,8 @@
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
     doc.head.insertAdjacentHTML('beforeEnd', 
-                                '<style data-waapisid="' + _animation_name + 
-                                '">@' + getVendorPrefix(_element, 'animationName') + 
-                                'keyframes ' + _animation_name + 
+                                '<style data-waapisid="' + _animation_name + '">' +
+                                '@' + getVendorPrefix(_element, 'animationName') + 'keyframes ' + _animation_name + 
                                 '{' + generateCSSKeyframes(_element, animations) + 
                                 '}</style>');
 
