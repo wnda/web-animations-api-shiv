@@ -61,9 +61,9 @@
       case !!(!!offset && offset === 1):
         return '100% {' + effects + '}';
       case !!(!!offset && offset > 0 && offset < 1):
-        return (offset * 100).toFixed(2) + '% {' + effects + '}';
+        return (offset * 1e2).toFixed(2) + '% {' + effects + '}';
       default:
-        return (100 / (idx + 1 * 100)).toFixed(2) + '% {' + effects + '}';
+        return (((idx + 1) / len) * 1e2).toFixed(2) + '% {' + effects + '}';
     }
   }
 
