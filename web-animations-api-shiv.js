@@ -8,7 +8,12 @@
     var _element = this;
     var _animation_name = options.id ? options.id.toString() : createAnimationName(win.Date.now(), _element);
 
-    doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapisid="'+ _animation_name +'">@' + getVendorPrefix(_element, 'animationName') + 'keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
+    doc.head.insertAdjacentHTML('beforeEnd', 
+                                '<style data-waapisid="' + _animation_name + 
+                                '">@' + getVendorPrefix(_element, 'animationName') + 
+                                'keyframes ' + _animation_name + 
+                                '{' + generateCSSKeyframes(_element, animations) + 
+                                '}</style>');
 
     addStylesToElement(_element, {
       'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s';
@@ -54,34 +59,7 @@
   }
 
   function getCSSProperty (element, prop) {
-    var _js_properties = element.style;
-    var _js_prop = '';
-    var _css_prop = camelCaseToHyphenated(prop);
-
-    if (prop in _js_properties) { return prop; }
-
-    _js_prop = prop.substr(0,1).toUppercase() + prop.substr(1);
-
-    switch (!0) {
-      case !!(('webkit' + _js_prop) in _js_properties):
-      case !!(('Webkit' + _js_prop) in _js_properties):
-        return '-webkit-' + _css_prop;
-
-      case !!(('moz' + _js_prop) in _js_properties):
-      case !!(('Moz' + _js_prop) in _js_properties):
-        return '-moz-' + _css_prop;
-
-      case !!(('ms' + _js_prop) in _js_properties):
-      case !!(('Ms' + _js_prop) in _js_properties):
-        return '-ms-' + _css_prop;
-
-      case !!(('o' + _js_prop) in _js_properties):
-      case !!(('O' + _js_prop) in _js_properties):
-        return '-o-' + _css_prop;
-
-      default:
-        return _css_prop;
-    }
+    return getVendorPrefix(element, prop) + convertToCSSProp(prop);
   }
   
   function getVendorPrefix (element, prop) {
@@ -96,7 +74,7 @@
              '';
   }
   
-  function camelCaseToHyphenated (str) {
+  function convertToCSSProp (str) {
     return str.split('').map(function (char) {
       if (char === char.toLowerCase()) { return char; } 
       else { return '-' + char.toLowerCase() }
