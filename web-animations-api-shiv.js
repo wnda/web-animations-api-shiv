@@ -2,7 +2,7 @@
 ;(function (win, doc) {
   'use strict';
 
-  if ('animate' in Element.prototype) { return; }
+  if ('animate' in HTMLElement.prototype) { return; }
 
   HTMLElement.prototype.animate = function (animations, options) {
     var _element = this;
