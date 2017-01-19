@@ -10,19 +10,22 @@
     doc.head.insertAdjacentHTML('beforeEnd', 
       '<style data-waapiid="' + _animation_name + '">' +
       '@' + getVendorPrefix(_element, 'animationName', true) + 'keyframes ' + _animation_name + '{' + 
-      generateCSSKeyframes(_element, js_keyframes) + 
+        generateCSSKeyframes(_element, js_keyframes) + 
+      '}' + 
+      '.' + _animation_name + ' {' +
+        getAttributeStyles(_element, {
+          'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
+          'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
+          'animationTimingFunction': options.easing || 'linear',
+          'animationDirection': options.direction || 'normal',
+          'animationFillMode': options.fill || '',
+          'animationDelay': options.delay || '0s',
+          'animationName': _animation_name || ''
+        }) + 
       '}' +
       '</style>'
     );
-    _element.setAttribute('style', getAttributeStyles(_element, {
-      'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
-      'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
-      'animationTimingFunction': options.easing || 'linear',
-      'animationDirection': options.direction || 'normal',
-      'animationFillMode': options.fill || '',
-      'animationDelay': options.delay || '0s',
-      'animationName': _animation_name || ''
-    }));
+    _element.classList.add(_animation_name);
     return _element;
   };
   
@@ -46,7 +49,7 @@
       var _offset = keyframe.offset || null;
       var _easing = keyframe.easing || null;
       var _keys = win.Object.keys(keyframe).filter(function (key) { return key !== 'offset' && key !== 'easing'; });
-      var _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + ';' + 
+      var _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + '; ' + 
                        (!!_easing ? getCSSProperty(element, 'animationTimingFunction') + ':' + _easing + ';' : '');      
       return buildKeyframeString(_effects, _offset, idx, arr.length);
     }).join('');
@@ -103,7 +106,7 @@
     return win.Object.keys(css).filter(function (pair) {
       return !!css[pair];
     }).map(function (pair) {
-      return getCSSProperty(element, pair) + ': ' + css[pair] + ';';
+      return getCSSProperty(element, pair) + ': ' + css[pair] + '; ';
     }).join('');
   }
 
