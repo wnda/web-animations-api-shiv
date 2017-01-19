@@ -11,13 +11,13 @@
     doc.head.insertAdjacentHTML('beforeEnd', '<style data-waapisid="'+ _animation_name +'">@keyframes ' + _animation_name + '{' + generateCSSKeyframes(_element, animations) + '}</style>');
 
     addStylesToElement(_element, {
-      'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms'       || '0s';
+      'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s';
       'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1';
-      'animationTimingFunction': options.easing    || 'linear';
+      'animationTimingFunction': options.easing || 'linear';
       'animationDirection': options.direction || 'normal';
-      'animationFillMode': options.fill      || '';
-      'animationDelay': options.delay     || '0s';
-      'animationName': _animation_name   || '';
+      'animationFillMode': options.fill || '';
+      'animationDelay': options.delay || '0s';
+      'animationName': _animation_name || '';
     });
   };
   
@@ -26,21 +26,21 @@
   };
   
   HTMLElement.prototype.play = function () {
-    this.style[getCSSProperty('animationPlayState')] = 'running';
+    this.style[getCSSProperty(this, 'animationPlayState')] = 'running';
   };
 
   HTMLElement.prototype.pause = function () {
-    this.style[getCSSProperty('animationPlayState')] = 'paused';
+    this.style[getCSSProperty(this, 'animationPlayState')] = 'paused';
   };
   
   function generateCSSKeyframes (element, js_keyframes) {
     return js_keyframes.map(function (keyframe, idx, arr) {
-      var _offset  = keyframe.offset || null;
-      var _easing  = keyframe.easing || null;
-      var _keys    = win.Object.keys(keyframe).filter(function (key) { return key !== 'offset' && key !== 'easing'; });
+      var _offset = keyframe.offset || null;
+      var _easing = keyframe.easing || null;
+      var _keys = win.Object.keys(keyframe).filter(function (key) { return key !== 'offset' && key !== 'easing'; });
       var _effects = getCSSProperty(element, _keys[0]) + ': ' + keyframe[_keys[0]] + ';';
 
-      if (!!_easing) { _effects += 'animation-timing-function:' + _easing + ';'; }
+      if (!!_easing) { _effects += getCSSProperty(element, 'animationTimingFunction') + ':' + _easing + ';'; }
       
       return buildKeyframeString(_effects, _offset, idx, arr.length);
     }).join('');
@@ -53,34 +53,44 @@
     return 100 / (idx + 1 * 100) + '% {' + effects + '}';
   }
 
-  function getCSSProperty (element, css_property) {
-    var _css_properties = element.style;
-    var _js_property = '';
+  function getCSSProperty (element, prop) {
+    var _js_properties = element.style;
+    var _js_prop = '';
+    var _css_prop = camelCaseToHyphenated(prop);
 
-    if (css_property in _css_properties) { return css_property; }
+    if (prop in _js_properties) { return prop; }
 
-    _js_property = css_property.substr(0,1).toUppercase() + css_property.substr(1);
+    if (prop.toLowerCase() !== prop) { 
+      _js_prop = prop.substr(0,1).toUppercase() + prop.substr(1);
+    }
 
     switch (!0) {
-      case !!(('webkit' + _js_property) in _css_properties):
-      case !!(('Webkit' + _js_property) in _css_properties):
-        return '-webkit-' + css_property;
+      case !!(('webkit' + _js_prop) in _js_properties):
+      case !!(('Webkit' + _js_prop) in _js_properties):
+        return '-webkit-' + _css_prop;
 
-      case !!(('moz' + _js_property) in _css_properties):
-      case !!(('Moz' + _js_property) in _css_properties):
-        return '-moz-' + css_property;
+      case !!(('moz' + _js_prop) in _js_properties):
+      case !!(('Moz' + _js_prop) in _js_properties):
+        return '-moz-' + _css_prop;
 
-      case !!(('ms' + _js_property) in _css_properties):
-      case !!(('Ms' + _js_property) in _css_properties):
-        return '-ms-' + css_property;
+      case !!(('ms' + _js_prop) in _js_properties):
+      case !!(('Ms' + _js_prop) in _js_properties):
+        return '-ms-' + _css_prop;
 
-      case !!(('o' + _js_property) in _css_properties):
-      case !!(('O' + _js_property) in _css_properties):
-        return '-o-' + css_property;
+      case !!(('o' + _js_prop) in _js_properties):
+      case !!(('O' + _js_prop) in _js_properties):
+        return '-o-' + _css_prop;
 
       default:
-        return css_property;
+        return _css_prop;
     }
+  }
+  
+  function camelCaseToHyphenated (str) {
+    return str.split('').map(function (char) {
+      if (char === char.toLowerCase()){ return char; } 
+      else { return '-' + char.toLowerCase() }
+    }).join('')
   }
   
   function addStylesToElement(element, css) {
