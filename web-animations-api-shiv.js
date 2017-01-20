@@ -22,7 +22,7 @@
           'animationFillMode': options.fill || '',
           'animationDelay': options.delay || '0s',
           'animationName': _animation_name || ''
-        }) + 
+        }) + getVendorPrefix(_element, 'animationPlayState', true) + ': running;' + 
       '}' +
       '</style>'
     );
