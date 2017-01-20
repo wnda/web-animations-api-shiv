@@ -30,15 +30,15 @@
     _element.setAttribute('data-waapiel', _animation_name);
     
     _element.playState = (function () {
-      return win.getComputedStyle(_element)[getVendorPrefix(_element, 'animationPlayState', false) + 'animationPlayState'] || '';
+      return win.getComputedStyle(this)[getJSProperty(this, 'animationPlayState')];
     }).call(_element);
     
     _element.play = function () {
-      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'running';
+      _element.style[getJSProperty(_element, 'animationPlayState')] = 'running';
     };
 
     _element.pause = function () {
-      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused';
+      _element.style[getJSProperty(_element, 'animationPlayState')] = 'paused';
     };
     
     _element.cancel = function () {
@@ -91,6 +91,10 @@
 
   function getCSSProperty (element, prop) {
     return getVendorPrefix(element, prop, true) + convertToCSSProp(prop);
+  }
+  
+  function getJSProperty(element, prop) {
+    return getVendorPrefix(element, prop, false) + prop;
   }
   
   function getVendorPrefix (element, prop, css) {
