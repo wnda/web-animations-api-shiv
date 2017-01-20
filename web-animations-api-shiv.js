@@ -42,13 +42,13 @@
     };
     
     _element.cancel = function () {
-      var _stylesheet = doc.querySelector('[data-waapiid="' + _element.getAttribute('data-waapiel') + '"]');
+      var _stylesheet = doc.querySelector('[data-waapiid="' + _animation_name + '"]');
       _stylesheet.parentNode.removeChild(_stylesheet);
-      _element.playState = void 0;
-      _element.play = void 0;
-      _element.pause = void 0;
-      _element.cancel = void 0;
       _element.removeAttribute('data-waapiel');
+      delete(_element.playState);
+      delete(_element.play);
+      delete(_element.pause);
+      delete(_element.cancel);
     };
     
     return _element;
