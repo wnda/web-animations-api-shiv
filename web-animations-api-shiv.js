@@ -34,11 +34,11 @@
     }).call(_element);
     
     _element.play = function () {
-      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'running !important';
+      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'running';
     };
 
     _element.pause = function () {
-      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused !important';
+      _element.style[getCSSProperty(_element, 'animationPlayState')] = 'paused';
     };
     
     _element.cancel = function () {
