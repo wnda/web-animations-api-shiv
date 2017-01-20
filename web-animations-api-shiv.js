@@ -14,7 +14,7 @@
         generateCSSKeyframes(_element, js_keyframes) + 
       '}' + 
       '[data-waapiel="' + _animation_name + '"] {' +
-        getAttributeStyles(_element, {
+        getAnimationCSS(_element, {
           'animationDuration': options.duration ? options.duration + 'ms' : options + 'ms' || '0s',
           'animationIterationCount': options.iterations === Infinity ? 'infinite' : options.iterations || '1',
           'animationTimingFunction': options.easing || 'linear',
@@ -112,7 +112,7 @@
     }).join('');
   }
   
-  function getAttributeStyles (element, css) {
+  function getAnimationCSS (element, css) {
     return win.Object.keys(css).filter(function (pair) {
       return !!css[pair];
     }).map(function (pair) {
