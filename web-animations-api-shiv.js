@@ -22,7 +22,7 @@
           'animationFillMode': options.fill || '',
           'animationDelay': options.delay || '0s',
           'animationName': _animation_name || ''
-        }) + getVendorPrefix(_element, 'animationPlayState', true) + 'animation-play-state: running;' + 
+        }) + getCSSProperty(_element, 'animationPlayState') + ': running;' + 
       '}' +
       '</style>'
     );
@@ -30,7 +30,7 @@
     _element.setAttribute('data-waapiel', _animation_name);
     
     _element.playState = (function () {
-      return win.getComputedStyle(_element)[getVendorPrefix(_element, 'animationPlayState', false)] || '';
+      return win.getComputedStyle(_element)[getVendorPrefix(_element, 'animationPlayState', false) + 'animationPlayState'] || '';
     }).call(_element);
     
     _element.play = function () {
