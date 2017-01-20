@@ -96,12 +96,12 @@
   function getVendorPrefix (element, prop, css) {
     var _js_props = element.style;
     var _js_prop = prop.substr(0,1).toUpperCase() + prop.substr(1);
-    var _prefix = prop in _js_props     ? ''       : 
+    var _prefix = (prop in _js_props     ? ''       : 
        'webkit' + _js_prop in _js_props ? 'webkit' : 
           'moz' + _js_prop in _js_props ? 'moz'    : 
            'ms' + _js_prop in _js_props ? 'ms'     : 
             'o' + _js_prop in _js_props ? 'o'      : 
-             '';
+             '') || '';
     return !!css && !!_prefix ? '-' + _prefix + '-' : _prefix;
   }
   
