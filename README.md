@@ -99,4 +99,4 @@ GSAP has some licensing small print that you might want to familiarise yourself 
 > As for the performance of the Web Animations API, it is identical to CSS Animations/Transitions. It is exactly the same code running both. The whole purpose of Web Animations API is to be a lower-level API on top of which CSS Animations/Transitions run. (And SMIL too, for that matter.)
 
 ## Still here?
-You've been warned. This is by no means the answer to all problems in web animation. But it is Apache licensed (unlike GSAP) and it's fast, easy to use, and fun! You can feel like a rockstar who doesn't care about Safari 7 or Chrome 40!
+You've been warned. This is by no means the answer to all problems in web animation. But it is BSD licensed (unlike GSAP) and it's fast, easy to use, and fun! You can feel like a rockstar who doesn't care about Safari 7 or Chrome 40!
